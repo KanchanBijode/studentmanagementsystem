@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Students</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+
+        <h2 class="text-center mb-4">
+            Student List
+            </h2>
+            <div class="mb-3 text-end">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2>Student List</h2>
+            <form th:action="@{/filterCourse}" method="get" class="row mb-3">
+
+                <div class="col-md-4">
+
+                    <select name="course" class="form-select">
+
+                        <option value="">Select Course</option>
+
+                        <option>MCA</option>
+                        <option>ITI</option>
+                        <option>Java</option>
+                        <option>java</option>
+                        <option>B.PHARMA</option>
+                        <option>BSC</option>
+                        <option>B.Tech</option>
+                        <option>BSC Bio</option>
+                        <option>BMLT</option>
+                        <option>LLB</option>
+                        <option>m.tech</option>
+                        <option>llb</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary">
+                        Filter
+                    </button>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <a href="/viewStudents" class="btn btn-secondary">
+                        Reset
+                    </a>
+
+                </div>
+
+            </form>
+            
+            <form th:action="@{/sortStudents}" method="get" class="row mb-3">
+
+                <div class="col-md-4">
+
+                    <select name="sortBy" class="form-select">
+
+                        <option value="">Sort By</option>
+
+                        <option value="nameAsc">Name A - Z</option>
+
+                        <option value="nameDesc">Name Z - A</option>
+
+                        <option value="latest">Latest Students</option>
+
+                        <option value="oldest">Oldest Students</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button type="submit" class="btn btn-success">
+                        Sort
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div>
+
+                <a href="/export/pdf" class="btn btn-danger">
+                    PDF
+                </a>
+
+                <a href="/exportExcel" class="btn btn-success">
+                    Export Excel
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Success Message -->
+        <div th:if="${success}" class="alert alert-success">
+            <span th:text="${success}"></span>
+        </div>
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Course</th>
+                <th>Mobile</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="student : ${students}">
+
+                <td th:text="${student.id}"></td>
+
+                <td>
+                    <img th:if="${student.photo != null}"
+                        th:src="@{'/uploads/' + ${student.photo}}"
+                        width="80"
+                        height="80"
+                        style="border-radius:50%;object-fit:cover;">
+                </td>
+
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.email}"></td>
+                <td th:text="${student.course}"></td>
+                <td th:text="${student.mobile}"></td>
+
+                <td>
+                    <a th:href="@{/student/{id}(id=${student.id})}"
+                    class="btn btn-primary btn-sm">
+                        View
+                    </a>
+
+                    <a th:href="@{/editStudent/{id}(id=${student.id})}"
+                    class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a th:href="@{/deleteStudent/{id}(id=${student.id})}"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Are you sure?')">
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+        <nav class="mt-4" th:if="${totalPages != null}">
+
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item"
+                    th:if="${currentPage>0}">
+
+                    <a class="page-link"
+                    th:href="@{/viewStudents(page=${currentPage-1})}">
+
+                        Previous
+
+                    </a>
+
+                </li>
+
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0,totalPages-1)}">
+
+                    <a class="page-link"
+                    th:href="@{/viewStudents(page=${i})}"
+                    th:text="${i+1}">
+
+                    </a>
+
+                </li>
+
+                <li class="page-item"
+                    th:if="${currentPage<totalPages-1}">
+
+                    <a class="page-link"
+                    th:href="@{/viewStudents(page=${currentPage+1})}">
+
+                        Next
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+        <a href="/dashboard" class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
+
+</body>
+</html>

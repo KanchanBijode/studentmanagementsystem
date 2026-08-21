@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Student Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3 class="text-center">
+                Student Profile
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="text-center mb-4">
+
+                <img th:if="${student.photo != null}"
+                     th:src="@{'/uploads/' + ${student.photo}}"
+                     width="150"
+                     height="150"
+                     style="border-radius:50%;object-fit:cover;">
+
+            </div>
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${student.id}"></td>
+                </tr>
+
+                <tr>
+                    <th>Name</th>
+                    <td th:text="${student.name}"></td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td th:text="${student.email}"></td>
+                </tr>
+
+                <tr>
+                    <th>Course</th>
+                    <td th:text="${student.course}"></td>
+                </tr>
+
+                <tr>
+                    <th>Mobile</th>
+                    <td th:text="${student.mobile}"></td>
+                </tr>
+
+            </table>
+
+            <div class="text-center">
+
+                <a th:href="@{/editStudent/{id}(id=${student.id})}"
+                   class="btn btn-warning">
+                    Edit
+                </a>
+
+                <a th:href="@{/deleteStudent/{id}(id=${student.id})}"
+                   class="btn btn-danger"
+                   onclick="return confirm('Delete this student?')">
+                    Delete
+                </a>
+
+                <a href="/viewStudents"
+                   class="btn btn-secondary">
+                    Back
+                </a>
+                <a th:href="@{/student/idcard/{id}(id=${student.id})}"
+                    class="btn btn-success">
+
+                        <i class="bi bi-person-vcard-fill"></i>
+                        Generate ID Card
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search Result</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white text-center">
+            <h3>Search Result</h3>
+        </div>
+
+        <div class="card-body">
+
+            <!-- No Student Found -->
+            <div th:if="${#lists.isEmpty(students)}"
+                 class="alert alert-danger text-center">
+
+                <h5>No Student Found!</h5>
+
+            </div>
+
+            <!-- Student List -->
+            <table class="table table-bordered table-hover"
+                   th:if="${!#lists.isEmpty(students)}">
+
+                <thead class="table-dark">
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Mobile</th>
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="student : ${students}">
+
+                    <td th:text="${student.id}"></td>
+
+                    <td>
+
+                        <img th:if="${student.photo != null}"
+                             th:src="@{'/uploads/' + ${student.photo}}"
+                             width="70"
+                             height="70"
+                             style="border-radius:50%;object-fit:cover;">
+
+                    </td>
+
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.course}"></td>
+                    <td th:text="${student.mobile}"></td>
+
+                    <td>
+
+                        <a th:href="@{/editStudent/{id}(id=${student.id})}"
+                           class="btn btn-warning btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <a th:href="@{/deleteStudent/{id}(id=${student.id})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this student?')">
+
+                            Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+            <a href="/searchStudent"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

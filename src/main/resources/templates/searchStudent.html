@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Search Student</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning text-center">
+
+            <h3>Search Student</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <h5>Search By Name</h5>
+
+            <form action="/searchStudent" method="post">
+
+                <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter Student Name">
+
+                <br>
+
+                <button class="btn btn-primary">
+
+                    Search
+
+                </button>
+
+            </form>
+
+            <hr>
+
+            <h5>Search By ID</h5>
+
+            <form action="/searchStudentById" method="post">
+
+                <input
+                        type="number"
+                        name="id"
+                        class="form-control"
+                        placeholder="Enter Student ID">
+
+                <br>
+
+                <button class="btn btn-success">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
