@@ -400,16 +400,21 @@ public class HomeController {
                                     Model model,
                                     HttpSession session) {
 
-        if(session.getAttribute("user")==null){
+        if (session.getAttribute("user") == null) {
             return "redirect:/";
         }
 
         Student student = studentService.searchStudentById(id);
 
-        model.addAttribute("student", student);
+        List<Student> students = new ArrayList<>();
+
+        if (student != null) {
+            students.add(student);
+        }
+
+        model.addAttribute("students", students);
 
         return "searchResult";
-
     }
     @GetMapping("/student/{id}")
     public String studentProfile(@PathVariable int id, Model model) {
