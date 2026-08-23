@@ -3,12 +3,11 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 COPY pom.xml .
-COPY mvnw .
 COPY src src
 
-RUN chmod +x mvnw
+RUN apt-get update && apt-get install -y maven
 
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 EXPOSE 8080
 
